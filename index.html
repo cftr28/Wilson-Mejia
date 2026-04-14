@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Invitación Daphne & Daniel</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-sobre: #4a3424; 
+            --color-sobre-oscuro: #3d2a1d;
+            --color-solapa: #5c4434;
+            --dorado-brillante: #e5cf9e;
+            --dorado-oscuro: #b8955a;
+            --fondo: #f5f2ed;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            height: -webkit-fill-available;
+            font-family: 'Georgia', serif;
+            background-color: var(--fondo);
+            overflow: hidden;
+            position: fixed;
+        }
+
+        .viewport-container {
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; height: 100vh; height: calc(var(--vh, 1vh) * 100);
+            width: 100%; padding: 20px;
+        }
+
+        /* --- EL SOBRE --- */
+        .sobre-wrapper {
+            position: relative;
+            width: 90vw;
+            max-width: 440px;
+            aspect-ratio: 5 / 3.4;
+            cursor: pointer;
+            perspective: 1000px;
+            z-index: 10;
+        }
+
+        .sobre-cuerpo {
+            position: absolute;
+            bottom: 0; width: 100%; height: 100%;
+            background-color: var(--color-sobre);
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 30px; /* Posición baja para el nombre */
+        }
+
+        .nombre-sobre {
+            color: var(--dorado-brillante);
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(22px, 6vw, 32px);
+            text-align: center;
+            padding: 0 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .solapa {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--color-solapa);
+            clip-path: polygon(0 0, 100% 0, 50% 50%); /* Solapa corta */
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top;
+            z-index: 30;
+            display: flex;
+            justify-content: center;
+            filter: drop-shadow(0 4px 5px rgba(0,0,0,0.3));
+        }
+
+        .monograma {
+            margin-top: 22px; /* DD 5mm abajo */
+            color: rgba(255, 255, 255, 0.15);
+            font-size: clamp(28px, 8vw, 42px);
+            letter-spacing: 10px;
+        }
+
+        .texto-guia {
+            margin-top: 35px;
+            font-size: 0.75rem;
+            color: var(--dorado-oscuro);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+        .abrir-sobre .solapa { transform: rotateX(180deg); z-index: 5; }
+
+        /* --- TARJETA INTERIOR (TODAS LAS FRASES RESTAURADAS) --- */
+        #seccion-pase {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--fondo);
+            display: none; flex-direction: column; justify-content: center;
+            align-items: center; opacity: 0; transition: opacity 0.8s ease-in;
+            z-index: 100; padding: 20px;
+        }
+
+        .tarjeta-detalle {
+            width: 100%; max-width: 380px; padding: 40px 20px;
+            background: #ffffff; border-radius: 4px; text-align: center;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1); position: relative;
+        }
+
+        .tarjeta-detalle::after {
+            content: ""; position: absolute; top: 10px; bottom: 10px; left: 10px; right: 10px;
+            border: 1px solid #f0e6d6; pointer-events: none;
+        }
+
+        .tag-fiesta {
+            font-weight: bold; color: var(--dorado-oscuro);
+            letter-spacing: 2px; margin-bottom: 5px;
+            display: block; font-size: 0.75rem;
+        }
+
+        .boda-subtitulo { font-size: 0.75rem; letter-spacing: 2px; color: #a18a68; text-transform: uppercase; margin-top: 10px; }
+        .boda-titulo { font-size: 2.2rem; color: var(--color-sobre); margin: 15px 0; }
+        
+        .caja-invitado {
+            background-color: #fcfaf8; padding: 20px 10px; margin: 25px 0;
+            border-top: 1px solid #f0e6d6; border-bottom: 1px solid #f0e6d6;
+        }
+
+        .pases-n { color: var(--color-sobre); font-size: 0.9rem; margin-top: 8px; letter-spacing: 1px; }
+        .info-evento { font-size: 0.95rem; line-height: 1.6; color: #555; }
+        .nota-final { margin-top: 35px; font-size: 0.65rem; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="seccion-sobre" class="viewport-container">
+        <div class="sobre-wrapper" id="sobre" onclick="ejecutarApertura()">
+            <div class="solapa">
+                <div class="monograma">DD</div>
+            </div>
+            <div class="sobre-cuerpo">
+                <div class="nombre-sobre">Wilson Mejia</div>
+            </div>
+        </div>
+        <div class="texto-guia" onclick="ejecutarApertura()">Toca para abrir invitación</div>
+    </div>
+
+    <div id="seccion-pase">
+        <div class="tarjeta-detalle">
+            <span class="tag-fiesta">SÁBADO · 08 · AGOSTO · 2026</span>
+            <div class="boda-subtitulo">Invitación a Fiesta</div>
+            <div class="boda-titulo">Daphne & Daniel</div>
+            
+            <div class="caja-invitado">
+                <div style="font-size: 1.2rem; font-weight: bold; color: #333;">Wilson Mejia.</div>
+                <div class="pases-n">VÁLIDO POR 1 PASE</div>
+            </div>
+
+            <div class="info-evento">
+                <strong>Casa San Juan, Cumbayá</strong><br>
+                Quito, Ecuador<br>
+                A partir de las 19:30 hs
+            </div>
+
+            <p class="nota-final">Favor presentar este pase al ingresar</p>
+        </div>
+    </div>
+
+    <script>
+        function ajustarAltura() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        window.addEventListener('resize', ajustarAltura);
+        ajustarAltura();
+
+        let abierta = false;
+        function ejecutarApertura() {
+            if (abierta) return;
+            abierta = true;
+            document.getElementById('sobre').classList.add('abrir-sobre');
+            setTimeout(() => {
+                document.getElementById('seccion-sobre').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('seccion-sobre').style.display = 'none';
+                    const pase = document.getElementById('seccion-pase');
+                    pase.style.display = 'flex';
+                    requestAnimationFrame(() => { pase.style.opacity = '1'; });
+                }, 600);
+            }, 800);
+        }
+    </script>
+</body>
+</html>
